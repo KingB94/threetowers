@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Software Pricing</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Stripe.js -->
+  <script src="https://js.stripe.com/v3/"></script>
+  <!-- PayPal SDK (replace YOUR_PAYPAL_CLIENT_ID with your actual client ID) -->
+  <script src="https://www.paypal.com/sdk/js?client-id=ATx_O5FA5zRJ-nKZ55qTbl9Bg_s1FUJgWJLFDNcbwTqJYoCOuDs9KE_o3q3-cX0HT_ONBzFTFGTFcqr5&currency=USD"></script>
+  <style>
+    /* Optional: Additional styling for smooth transitions */
+    [data-dropdown-menu] {
+      transition: opacity 0.2s ease;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+  <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+    <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Software Pricing</h1>
+    
+    <form id="pricing-form">
+      <!-- Countries Dropdown -->
+      <div class="mb-4 relative" id="dropdown-countries">
+        <label class="block text-gray-700 mb-2">Select Countries:</label>
+        <button type="button" class="w-full px-4 py-2 border rounded text-left bg-white flex justify-between items-center" data-dropdown-button>
+          <span>Select Countries</span>
+          <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div class="absolute z-10 mt-2 w-full bg-white shadow-lg rounded border p-4 hidden" data-dropdown-menu>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="checkbox" value="USA" class="mr-2" />
+              USA
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Canada" class="mr-2" />
+              Canada
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="UK" class="mr-2" />
+              UK
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Germany" class="mr-2" />
+              Germany
+            </label>
+          </div>
+          <button type="button" class="w-full bg-blue-500 text-white py-1 mt-3 rounded hover:bg-blue-600 transition" data-dropdown-confirm>
+            Confirm
+          </button>
+        </div>
+      </div>
+      
+      <!-- Market Segments Dropdown -->
+      <div class="mb-4 relative" id="dropdown-segments">
+        <label class="block text-gray-700 mb-2">Select Market Segments:</label>
+        <button type="button" class="w-full px-4 py-2 border rounded text-left bg-white flex justify-between items-center" data-dropdown-button>
+          <span>Select Segments</span>
+          <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div class="absolute z-10 mt-2 w-full bg-white shadow-lg rounded border p-4 hidden" data-dropdown-menu>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="checkbox" value="Healthcare" class="mr-2" />
+              Healthcare
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Finance" class="mr-2" />
+              Finance
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Education" class="mr-2" />
+              Education
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Retail" class="mr-2" />
+              Retail
+            </label>
+          </div>
+          <button type="button" class="w-full bg-blue-500 text-white py-1 mt-3 rounded hover:bg-blue-600 transition" data-dropdown-confirm>
+            Confirm
+          </button>
+        </div>
+      </div>
+      
+      <!-- Calculate Price Button -->
+      <button type="button" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition" onclick="calculatePrice()">
+        Calculate Price
+      </button>
+    </form>
+    
+    <!-- Price Display and Payment Options -->
+    <div id="price-display" class="mt-6 hidden">
+      <h2 class="text-xl font-semibold text-center">Total Price: $<span id="total-price"></span></h2>
+      
+      <div class="mt-4">
+        <p class="text-center font-semibold">Choose Payment Method:</p>
+        <div class="flex flex-col gap-4 mt-2">
+          <!-- Stripe Card Payment (Checkout) -->
+          <button id="card-payment-btn" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition" onclick="startCheckout()">
+            Pay with Card
+          </button>
+          
+          <!-- Stripe Payment Request Button (Apple Pay / Google Pay) -->
+          <div id="payment-request-button" style="display: none;"></div>
+          
+          <!-- PayPal Button Container -->
+          <div id="paypal-button-container"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modern Dropdown Logic -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Toggle dropdown on button click
+      document.querySelectorAll("[data-dropdown-button]").forEach(button => {
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const dropdownMenu = button.parentElement.querySelector("[data-dropdown-menu]");
+          // Toggle the "hidden" class
+          dropdownMenu.classList.toggle("hidden");
+        });
+      });
+  
+      // Confirm selection in the dropdown
+      document.querySelectorAll("[data-dropdown-confirm]").forEach(confirmBtn => {
+        confirmBtn.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const dropdownMenu = confirmBtn.closest("[data-dropdown-menu]");
+          const checkboxes = dropdownMenu.querySelectorAll("input[type='checkbox']");
+          const selected = [];
+          checkboxes.forEach(cb => {
+            if (cb.checked) {
+              selected.push(cb.value);
+            }
+          });
+          // Update the button text with the selected options
+          const dropdownContainer = dropdownMenu.parentElement;
+          const dropdownButtonSpan = dropdownContainer.querySelector("[data-dropdown-button] span");
+          dropdownButtonSpan.textContent = selected.length ? selected.join(", ") : dropdownButtonSpan.getAttribute("data-default") || "Select Options";
+          // Hide the dropdown menu
+          dropdownMenu.classList.add("hidden");
+        });
+      });
+  
+      // Close any open dropdown when clicking outside
+      document.addEventListener("click", (event) => {
+        document.querySelectorAll("[data-dropdown-menu]").forEach(menu => {
+          if (!menu.parentElement.contains(event.target)) {
+            menu.classList.add("hidden");
+          }
+        });
+      });
+    });
+  </script>
+  
+  <!-- Payment and Checkout JavaScript (unchanged from your previous implementation) -->
+  <script>
+    // Initialize Stripe using your publishable key
+    const stripe = Stripe("pk_test_51QoNaEBipwDw8tqtXqEjY1NcJsEm04tkOimNw20skduXU9MS0b3ibTNT5hm5eQWe0uf80dPOOH03qMXJ09chyXI100rUzrTZbH");
+    let paymentRequest; // for Apple Pay / Google Pay
+  
+    async function calculatePrice() {
+      // Grab selected countries and segments from the custom dropdowns
+      const countries = Array.from(document.querySelectorAll("#dropdown-countries [data-dropdown-menu] input[type='checkbox']:checked"))
+                             .map(cb => cb.value);
+      const segments = Array.from(document.querySelectorAll("#dropdown-segments [data-dropdown-menu] input[type='checkbox']:checked"))
+                             .map(cb => cb.value);
+  
+      try {
+        const response = await fetch("/get_price", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ countries, segments }),
+        });
+        if (!response.ok) throw new Error("Failed to fetch price");
+        const data = await response.json();
+        document.getElementById("total-price").textContent = data.price;
+        document.getElementById("price-display").classList.remove("hidden");
+  
+        // Initialize the Payment Request button with the new price
+        initPaymentRequest(data.price);
+      } catch (error) {
+        alert("Error calculating price: " + error.message);
+      }
+    }
+  
+    async function startCheckout() {
+      const price = parseFloat(document.getElementById("total-price").textContent);
+      if (!price || price <= 0) {
+        alert("Invalid price. Please calculate again.");
+        return;
+      }
+      try {
+        const response = await fetch("/create_checkout_session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ price }),
+        });
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
+        const result = await stripe.redirectToCheckout({ sessionId: data.sessionId });
+        if (result.error) alert(result.error.message);
+      } catch (error) {
+        alert("Checkout error: " + error.message);
+      }
+    }
+  
+    async function initPaymentRequest(price) {
+      // Create a PaymentIntent on the server to obtain a client secret
+      const piResponse = await fetch("/create_payment_intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ price }),
+      });
+      const piData = await piResponse.json();
+      if (piData.error) {
+        console.error("Error creating PaymentIntent:", piData.error);
+        return;
+      }
+      const clientSecret = piData.clientSecret;
+  
+      // Create a PaymentRequest object with the updated total
+      paymentRequest = stripe.paymentRequest({
+        country: 'US',
+        currency: 'usd',
+        total: {
+          label: 'Software Subscription',
+          amount: Math.round(price * 100),
+        },
+        requestPayerName: true,
+        requestPayerEmail: true,
+      });
+  
+      paymentRequest.on('paymentmethod', async (ev) => {
+        const { error } = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: ev.paymentMethod.id,
+        }, { handleActions: false });
+  
+        if (error) {
+          ev.complete('fail');
+          alert("Payment failed: " + error.message);
+        } else {
+          ev.complete('success');
+          alert("Payment succeeded!");
+        }
+      });
+  
+      // Check if the Payment Request is available (Apple Pay/Google Pay support)
+      const result = await paymentRequest.canMakePayment();
+      if (result) {
+        const elements = stripe.elements();
+        const prButton = elements.create('paymentRequestButton', { paymentRequest });
+        prButton.mount('#payment-request-button');
+        document.getElementById('payment-request-button').style.display = 'block';
+      } else {
+        document.getElementById('payment-request-button').style.display = 'none';
+      }
+    }
+  
+    // Initialize the PayPal button
+    function initPayPalButton() {
+      const price = parseFloat(document.getElementById("total-price").textContent);
+      paypal.Buttons({
+        createOrder: async function(data, actions) {
+          const response = await fetch("/create_paypal_order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ price }),
+          });
+          const orderData = await response.json();
+          if (orderData.error) {
+            throw new Error(orderData.error);
+          }
+          return orderData.orderID;
+        },
+        onApprove: async function(data, actions) {
+          const response = await fetch("/capture_paypal_order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ orderID: data.orderID }),
+          });
+          const captureData = await response.json();
+          if (captureData.error) {
+            alert("PayPal capture failed: " + captureData.error);
+          } else {
+            alert("PayPal payment completed successfully!");
+          }
+        },
+        onError: function(err) {
+          console.error("PayPal error:", err);
+          alert("PayPal payment failed.");
+        }
+      }).render('#paypal-button-container');
+    }
+  
+    // Initialize PayPal button when the page loads
+    document.addEventListener("DOMContentLoaded", initPayPalButton);
+  </script>
+</body>
+</html>
