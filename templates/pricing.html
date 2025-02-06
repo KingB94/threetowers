@@ -31,8 +31,10 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
           </svg>
         </button>
-        <div class="absolute z-10 mt-2 w-full bg-white shadow-lg rounded border p-4 hidden" data-dropdown-menu>
+        <!-- Added Tailwind classes: max-h-64 and overflow-y-auto -->
+        <div class="absolute z-10 mt-2 w-full bg-white shadow-lg rounded border p-4 hidden max-h-64 overflow-y-auto" data-dropdown-menu>
           <div class="space-y-2">
+            <!-- Original Options -->
             <label class="flex items-center">
               <input type="checkbox" value="USA" class="mr-2" />
               USA
@@ -48,6 +50,47 @@
             <label class="flex items-center">
               <input type="checkbox" value="Germany" class="mr-2" />
               Germany
+            </label>
+            <!-- Additional 10 Countries -->
+            <label class="flex items-center">
+              <input type="checkbox" value="France" class="mr-2" />
+              France
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Italy" class="mr-2" />
+              Italy
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Spain" class="mr-2" />
+              Spain
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Australia" class="mr-2" />
+              Australia
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="New Zealand" class="mr-2" />
+              New Zealand
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Japan" class="mr-2" />
+              Japan
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="China" class="mr-2" />
+              China
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="India" class="mr-2" />
+              India
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Brazil" class="mr-2" />
+              Brazil
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="South Africa" class="mr-2" />
+              South Africa
             </label>
           </div>
           <button type="button" class="w-full bg-blue-500 text-white py-1 mt-3 rounded hover:bg-blue-600 transition" data-dropdown-confirm>
@@ -65,8 +108,10 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
           </svg>
         </button>
-        <div class="absolute z-10 mt-2 w-full bg-white shadow-lg rounded border p-4 hidden" data-dropdown-menu>
+        <!-- Added Tailwind classes: max-h-64 and overflow-y-auto -->
+        <div class="absolute z-10 mt-2 w-full bg-white shadow-lg rounded border p-4 hidden max-h-64 overflow-y-auto" data-dropdown-menu>
           <div class="space-y-2">
+            <!-- Original Options -->
             <label class="flex items-center">
               <input type="checkbox" value="Healthcare" class="mr-2" />
               Healthcare
@@ -83,22 +128,76 @@
               <input type="checkbox" value="Retail" class="mr-2" />
               Retail
             </label>
+            <!-- Additional 10 Market Segments -->
+            <label class="flex items-center">
+              <input type="checkbox" value="Technology" class="mr-2" />
+              Technology
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Manufacturing" class="mr-2" />
+              Manufacturing
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Energy" class="mr-2" />
+              Energy
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Transportation" class="mr-2" />
+              Transportation
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Real Estate" class="mr-2" />
+              Real Estate
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Agriculture" class="mr-2" />
+              Agriculture
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Hospitality" class="mr-2" />
+              Hospitality
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Entertainment" class="mr-2" />
+              Entertainment
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Logistics" class="mr-2" />
+              Logistics
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" value="Telecommunications" class="mr-2" />
+              Telecommunications
+            </label>
           </div>
           <button type="button" class="w-full bg-blue-500 text-white py-1 mt-3 rounded hover:bg-blue-600 transition" data-dropdown-confirm>
             Confirm
           </button>
         </div>
       </div>
-      
-      <!-- Calculate Price Button -->
-      <button type="button" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition" onclick="calculatePrice()">
-        Calculate Price
-      </button>
+
+      <!-- Subscription Type Selection -->
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-2">Subscription Type:</label>
+        <div class="flex items-center space-x-4">
+          <label class="inline-flex items-center">
+            <input type="radio" class="form-radio subscription-radio" name="subscriptionType" value="monthly" checked>
+            <span class="ml-2">Monthly</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" class="form-radio subscription-radio" name="subscriptionType" value="yearly">
+            <span class="ml-2">Yearly <span class="text-green-600">(Save 10%)</span></span>
+          </label>
+        </div>
+      </div>
     </form>
     
     <!-- Price Display and Payment Options -->
     <div id="price-display" class="mt-6 hidden">
-      <h2 class="text-xl font-semibold text-center">Total Price: $<span id="total-price"></span></h2>
+      <h2 class="text-xl font-semibold text-center">
+        Total Price: $<span id="total-price"></span>
+      </h2>
+      <p id="price-details" class="text-center mt-2 text-gray-600"></p>
       
       <div class="mt-4">
         <p class="text-center font-semibold">Choose Payment Method:</p>
@@ -118,7 +217,7 @@
     </div>
   </div>
   
-  <!-- Modern Dropdown Logic -->
+  <!-- Modern Dropdown Logic and Automatic Price Update -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       // Toggle dropdown on button click
@@ -126,12 +225,11 @@
         button.addEventListener("click", (event) => {
           event.stopPropagation();
           const dropdownMenu = button.parentElement.querySelector("[data-dropdown-menu]");
-          // Toggle the "hidden" class
           dropdownMenu.classList.toggle("hidden");
         });
       });
   
-      // Confirm selection in the dropdown
+      // Confirm selection in the dropdown and then check if both dropdowns are completed
       document.querySelectorAll("[data-dropdown-confirm]").forEach(confirmBtn => {
         confirmBtn.addEventListener("click", (event) => {
           event.stopPropagation();
@@ -146,9 +244,19 @@
           // Update the button text with the selected options
           const dropdownContainer = dropdownMenu.parentElement;
           const dropdownButtonSpan = dropdownContainer.querySelector("[data-dropdown-button] span");
-          dropdownButtonSpan.textContent = selected.length ? selected.join(", ") : dropdownButtonSpan.getAttribute("data-default") || "Select Options";
-          // Hide the dropdown menu
+          dropdownButtonSpan.textContent = selected.length ? selected.join(", ") : "Select Options";
           dropdownMenu.classList.add("hidden");
+  
+          // After confirming, check if both dropdowns have at least one selection
+          checkSelectionsAndCalculatePrice();
+        });
+      });
+  
+      // Listen for changes on the subscription radio buttons.
+      document.querySelectorAll('.subscription-radio').forEach(radio => {
+        radio.addEventListener('change', () => {
+          // If both dropdowns are filled, update the pricing
+          checkSelectionsAndCalculatePrice();
         });
       });
   
@@ -161,34 +269,64 @@
         });
       });
     });
+    
+    // Check if both dropdowns have selections and, if so, calculate the price.
+    function checkSelectionsAndCalculatePrice() {
+      const countriesSelected = Array.from(document.querySelectorAll("#dropdown-countries [data-dropdown-menu] input[type='checkbox']:checked"));
+      const segmentsSelected = Array.from(document.querySelectorAll("#dropdown-segments [data-dropdown-menu] input[type='checkbox']:checked"));
+      
+      if (countriesSelected.length > 0 && segmentsSelected.length > 0) {
+        calculatePrice();
+      }
+    }
   </script>
   
-  <!-- Payment and Checkout JavaScript (unchanged from your previous implementation) -->
+  <!-- Payment and Checkout JavaScript -->
   <script>
     // Initialize Stripe using your publishable key
     const stripe = Stripe("pk_test_51QoNaEBipwDw8tqtXqEjY1NcJsEm04tkOimNw20skduXU9MS0b3ibTNT5hm5eQWe0uf80dPOOH03qMXJ09chyXI100rUzrTZbH");
     let paymentRequest; // for Apple Pay / Google Pay
   
     async function calculatePrice() {
-      // Grab selected countries and segments from the custom dropdowns
+      // Get the selected countries, segments, and subscription type
       const countries = Array.from(document.querySelectorAll("#dropdown-countries [data-dropdown-menu] input[type='checkbox']:checked"))
                              .map(cb => cb.value);
       const segments = Array.from(document.querySelectorAll("#dropdown-segments [data-dropdown-menu] input[type='checkbox']:checked"))
                              .map(cb => cb.value);
+      const subscriptionType = document.querySelector('input[name="subscriptionType"]:checked').value;
   
       try {
+        // Pass the subscriptionType along if needed by your backend
         const response = await fetch("/get_price", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ countries, segments }),
+          body: JSON.stringify({ countries, segments, subscriptionType }),
         });
         if (!response.ok) throw new Error("Failed to fetch price");
         const data = await response.json();
-        document.getElementById("total-price").textContent = data.price;
+  
+        // Assume data.price is the base monthly price
+        const baseMonthlyPrice = parseFloat(data.price);
+        let finalPrice, detailsText;
+  
+        if (subscriptionType === "yearly") {
+          // Calculate yearly price with a 10% discount
+          finalPrice = (baseMonthlyPrice * 12 * 0.9).toFixed(2);
+          const fullYearlyCost = (baseMonthlyPrice * 12).toFixed(2);
+          const savings = (fullYearlyCost - finalPrice).toFixed(2);
+          detailsText = `Yearly Subscription: $${finalPrice} per year (Save $${savings} compared to $${fullYearlyCost})`;
+        } else {
+          // Monthly subscription
+          finalPrice = baseMonthlyPrice.toFixed(2);
+          detailsText = `Monthly Subscription: $${finalPrice} per month`;
+        }
+  
+        document.getElementById("total-price").textContent = finalPrice;
+        document.getElementById("price-details").textContent = detailsText;
         document.getElementById("price-display").classList.remove("hidden");
   
-        // Initialize the Payment Request button with the new price
-        initPaymentRequest(data.price);
+        // Reinitialize Payment Request button with the updated price
+        initPaymentRequest(finalPrice);
       } catch (error) {
         alert("Error calculating price: " + error.message);
       }
@@ -197,7 +335,7 @@
     async function startCheckout() {
       const price = parseFloat(document.getElementById("total-price").textContent);
       if (!price || price <= 0) {
-        alert("Invalid price. Please calculate again.");
+        alert("Invalid price. Please reselect options.");
         return;
       }
       try {
@@ -303,7 +441,7 @@
       }).render('#paypal-button-container');
     }
   
-    // Initialize PayPal button when the page loads
+    // Initialize the PayPal button when the page loads
     document.addEventListener("DOMContentLoaded", initPayPalButton);
   </script>
 </body>
