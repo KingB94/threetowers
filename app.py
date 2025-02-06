@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import os
 import stripe
 
 app = Flask(__name__)
+app.secret_key = "your_secret_key"  # Required for session management
 
 # Load Stripe secret key securely from environment variables
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
@@ -20,9 +21,62 @@ def calculate_price(countries, segments):
 def index():
     return render_template("index.html")
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
 @app.route("/pricing")
 def pricing():
     return render_template("pricing.html")
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        # This is a dummy example. In a real app, you'd verify user credentials.
+        session["logged_in"] = True
+        session["user"] = request.form.get("username", "User")  # Store username if needed
+        return redirect(url_for("index"))
+    return render_template("login.html")
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        # Process sign up logic
+        session["logged_in"] = True
+        session["user"] = request.form.get("username", "User")
+        return redirect(url_for("index"))
+    return render_template("signup.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("index"))
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+@app.route("/services")
+def services():
+    return render_template("services.html")
+
+@app.route("/how_it_works")
+def how_it_works():
+    return render_template("how_it_works.html")
+
+@app.route("/testimonials")
+def testimonials():
+    return render_template("testimonials.html")
+
+@app.route("/imprint")
+def imprint():
+    return render_template("imprint.html")
+
+@app.route("/account")
+def account():
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+    return render_template("account.html", user=session.get("user"))
 
 @app.route("/get_price", methods=["POST"])
 def get_price():
@@ -67,10 +121,6 @@ def create_checkout_session():
 
 @app.route("/create_payment_intent", methods=["POST"])
 def create_payment_intent():
-    """
-    Create a PaymentIntent for use with the Payment Request Button
-    (which supports Apple Pay and Google Pay via Stripe).
-    """
     try:
         data = request.get_json()
         price = float(data.get("price", 0))
@@ -86,19 +136,13 @@ def create_payment_intent():
         app.logger.exception("Error in create_payment_intent")
         return jsonify({"error": str(e)}), 400
 
-# --- Simulated PayPal Endpoints ---
 @app.route("/create_paypal_order", methods=["POST"])
 def create_paypal_order():
-    """
-    In a production system, you would call the PayPal API here to create an order.
-    For demonstration purposes, this endpoint simulates an order creation.
-    """
     try:
         data = request.get_json()
         price = float(data.get("price", 0))
         if price <= 0:
             raise ValueError("Invalid price")
-        # Simulated PayPal order ID (replace with a real API call)
         order_id = "SIMULATED_PAYPAL_ORDER_ID"
         return jsonify({"orderID": order_id})
     except Exception as e:
@@ -107,16 +151,11 @@ def create_paypal_order():
 
 @app.route("/capture_paypal_order", methods=["POST"])
 def capture_paypal_order():
-    """
-    In a production system, you would call the PayPal API to capture the order.
-    This example simulates a successful capture.
-    """
     try:
         data = request.get_json()
         order_id = data.get("orderID")
         if not order_id:
             raise ValueError("Missing order ID")
-        # Simulate successful capture
         return jsonify({"status": "COMPLETED"})
     except Exception as e:
         app.logger.exception("Error in capture_paypal_order")
