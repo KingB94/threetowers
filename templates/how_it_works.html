@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}How It Works - SIQ Company{% endblock %}
+
+{% block meta_description %}
+SIQ Company's AI-powered platform searches, identifies, qualifies, and manages leads by tagging companies, organizing them into campaigns, enabling collaboration with comments, and synchronizing with your existing customer database. Learn how it works.
+{% endblock %}
+
+{% block meta_keywords %}
+How It Works, AI, Lead Generation, Tag Companies, Campaign Lists, Collaboration, Customer Synchronization, SIQ Company, Search, Identify, Qualify
+{% endblock %}
+
+{% block extra_css %}
+<!-- Custom styles for How It Works page -->
+<style>
+  /* Container for the How It Works page */
+  .how-it-works-container {
+    padding: 80px 20px;
+    text-align: center;
+  }
+  
+  .how-it-works-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .how-it-works-container p.intro {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+  }
+  
+  /* Video placeholder styling */
+  .how-it-works-video {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 60px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Detailed Description Section */
+  .tool-description {
+    text-align: left;
+    max-width: 900px;
+    margin: 0 auto 60px auto;
+    padding: 20px;
+    background: var(--accent-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .tool-description h3 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+  }
+  
+  .tool-description p {
+    margin-bottom: 15px;
+  }
+  
+  /* Steps Section */
+  .how-it-works-steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .how-it-works-step {
+    background: var(--accent-color);
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .how-it-works-step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  .how-it-works-step i {
+    font-size: 40px;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+  }
+  
+  .how-it-works-step h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .how-it-works-step p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="how-it-works-container container">
+  <h2 data-aos="fade-down">How It Works</h2>
+  <p class="intro" data-aos="fade-up">
+    Discover how our innovative platform uses AI to search, identify, and qualify companies worldwide – revolutionizing lead generation.
+  </p>
+
+  <!-- Video Placeholder -->
+  <video class="how-it-works-video" controls autoplay loop muted>
+    <source src="{{ url_for('static', filename='videos/wm.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  
+  <!-- Detailed Description Section -->
+  <div class="tool-description" data-aos="fade-up">
+    <h3>Experience Powerful Lead Management</h3>
+    <p>
+      Our cutting-edge platform offers an all‑in‑one solution for managing and qualifying leads. With advanced AI technology, you can effortlessly <strong>tag companies</strong> based on performance, industry trends, and strategic value. Easily classify leads as <em>hot</em>, <em>medium</em>, or <em>cold</em>, so you can quickly prioritize the most promising opportunities.
+    </p>
+    <p>
+      Organize your leads into customized lists and <strong>campaigns</strong> to streamline your marketing efforts. Create targeted campaigns, monitor progress, and manage your outreach efficiently. The platform also empowers you to collaborate with your team by allowing you to add comments on each company record. This collaboration feature ensures that your team stays updated and aligned on follow‑up strategies.
+    </p>
+    <p>
+      Enhance your lead management further by integrating your existing customer database. Our synchronization feature keeps your current customer information up‑to‑date, enabling you to nurture long‑term relationships and identify upselling opportunities.
+    </p>
+    <p>
+      Discover a comprehensive lead management experience that combines smart tagging, campaign list organization, real‑time collaboration through comments, and seamless integration with your existing customers. Empower your sales and marketing teams to search, identify, and qualify leads like never before.
+    </p>
+  </div>
+  
+  <!-- Process Steps -->
+  <div class="how-it-works-steps">
+    <div class="how-it-works-step" data-aos="fade-up">
+      <i class="fas fa-search"></i>
+      <h3>Search</h3>
+      <p>Our platform scours the web for companies that meet your specific criteria.</p>
+    </div>
+    <div class="how-it-works-step" data-aos="fade-up" data-aos-delay="100">
+      <i class="fas fa-lightbulb"></i>
+      <h3>Identify</h3>
+      <p>Advanced algorithms filter and pinpoint the most promising leads from vast datasets.</p>
+    </div>
+    <div class="how-it-works-step" data-aos="fade-up" data-aos-delay="200">
+      <i class="fas fa-check-circle"></i>
+      <h3>Qualify</h3>
+      <p>We qualify the selected companies to ensure they have high conversion potential.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Initialize AOS animations
+  AOS.init({
+    duration: 800,
+    easing: 'slide'
+  });
+</script>
+{% endblock %}

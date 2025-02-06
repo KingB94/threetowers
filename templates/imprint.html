@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Imprint - SIQ Company{% endblock %}
+
+{% block meta_description %}
+Imprint and legal information for SIQ Company – a cutting-edge AI-powered lead generation platform. Find our company details, board information, contact data, and legal disclaimers.
+{% endblock %}
+
+{% block meta_keywords %}
+Imprint, Legal Information, Data Protection, Terms and Conditions, SIQ Company, Lead Generation, AI, Contact, Germany
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  .imprint-container {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: var(--text-color);
+  }
+
+  .imprint-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .imprint-section {
+    margin-bottom: 40px;
+    background: var(--accent-color);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .imprint-section h3 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+  }
+
+  .imprint-section p, 
+  .imprint-section address,
+  .imprint-section ul {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+
+  .imprint-section address {
+    font-style: normal;
+  }
+
+  .imprint-section ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .imprint-footer {
+    text-align: center;
+    border-top: 1px solid #444;
+    padding-top: 20px;
+    font-size: 0.9rem;
+  }
+
+  .imprint-footer a {
+    color: var(--primary-color);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="imprint-container container" data-aos="fade-up">
+  <!-- Legal Information Section -->
+  <section class="imprint-section">
+    <h2>Imprint</h2>
+    <p>
+      This website is published by:
+    </p>
+    <address>
+      SIQ Company GmbH<br>
+      Kirchberg 17<br>
+      85283 Geroldshausen<br>
+      Germany
+    </address>
+    <p>
+      Phone: <a href="tel:+491234567890">+49 123 4567890</a><br>
+      Email: <a href="mailto:info@siqcompany.de">info (at) siqcompany.de</a>
+    </p>
+    <p>
+      VAT ID: DE 123456789<br>
+      Commercial Register: HRB 123456, Registry Court City
+    </p>
+    <p>
+      Responsible for the content on this website:<br>
+      [Responsible Person Name]<br>
+      Email: <a href="mailto:homepage@siqcompany.de">homepage (at) siqcompany.de</a>
+    </p>
+  </section>
+
+  <!-- Photo Credits Section -->
+  <section class="imprint-section">
+    <h3>Photo Credits</h3>
+    <p>
+      Photo credits:<br>
+      Fotolia.com, iStock, Adobe Stock, etc.
+    </p>
+  </section>
+
+  <!-- Liability Disclaimer Section -->
+  <section class="imprint-section">
+    <h3>Liability Disclaimer</h3>
+    <p>
+      SIQ Company GmbH does not assume any liability for the correctness and completeness of the information provided.
+      All offers are non-binding and without commitment. We expressly reserve the right to change, supplement, or delete parts of the website or the entire offering without separate notice, or to temporarily or permanently suspend publication.
+    </p>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Optionally, add any JavaScript you need for the imprint page
+</script>
+{% endblock %}

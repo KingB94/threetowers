@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}SIQ Company – Search. Identify. Qualify.{% endblock %}</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="{% block meta_description %}SIQ Company revolutionizes lead generation with our AI-powered platform that searches, identifies, and qualifies leads globally.{% endblock %}" />
+    <meta name="keywords"
+        content="{% block meta_keywords %}Search, Identify, Qualify, AI, Lead Generation, Global Leads, SIQ Company{% endblock %}" />
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
+
+    <!-- Google Fonts (Montserrat, Orbitron & Roboto) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- AOS Animation CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>SIQ Company</h1>
+            <nav>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('how_it_works') }}">How It Works</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                    {% if session.get('logged_in') %}
+                    <li><a href="{{ url_for('account') }}" class="btn btn-account">Account</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="btn btn-logout">Logout</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}" class="btn btn-login">Login</a></li>
+                    <li><a href="{{ url_for('signup') }}" class="btn btn-signup">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+                <div class="mobile-menu" id="mobile-menu" aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Scroll to Top Button -->
+    <a href="#home" id="scrollToTop" title="Scroll to top"><i class="fas fa-chevron-up"></i></a>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 SIQ Company GmbH. All Rights Reserved.</p>
+            <p>
+                SIQ Company GmbH<br>
+                Kirchberg 17, 85283 Geroldshausen, Germany<br>
+                Phone: +49 123 4567890 | Email: <a href="mailto:info@siqcompany.de">info@siqcompany.de</a>
+            </p>
+            <ul class="footer-links">
+                <li><a href="{{ url_for('imprint') }}">Imprint</a></li>
+            </ul>
+            <ul class="social-links">
+                <li>
+                    <a href="#" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </li>
+                <li>
+                    <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </li>
+                <li>
+                    <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'slide'
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Scroll to Top Button
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

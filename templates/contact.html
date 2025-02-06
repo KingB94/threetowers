@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - SIQ Company{% endblock %}
+
+{% block meta_description %}
+Contact SIQ Company—an AI-powered platform that searches, identifies, qualifies, and manages leads worldwide. Located near Wolnzach, Bavaria, our headquarters and our dedicated shareholders drive innovation. Get in touch to learn more.
+{% endblock %}
+
+{% block meta_keywords %}
+Contact, SIQ Company, AI Lead Generation, Wolnzach, Bavaria, Shareholders, Customer Integration, Collaboration
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* Containers */
+  .contact-container,
+  .hq-container {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Page Headings */
+  h2.page-heading {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--text-color);
+  }
+
+  /* Contact Form */
+  .contact-form {
+    background: var(--accent-color);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 40px;
+  }
+
+  .contact-form .form-group {
+    margin-bottom: 20px;
+  }
+
+  .contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .contact-form input[type="text"],
+  .contact-form input[type="email"],
+  .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background: var(--input-bg);
+    color: var(--text-color);
+  }
+
+  .contact-form button.btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .contact-form button.btn:hover {
+    background: var(--secondary-color);
+  }
+
+  /* Map Container */
+  #hq-map {
+    width: 100%;
+    height: 400px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 40px;
+  }
+
+  /* Headquarters Details */
+  .hq-details {
+    background: var(--accent-color);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+
+  .hq-details p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .hq-details h3 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+  }
+
+  .hq-details ul.shareholders {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .hq-details ul.shareholders li {
+    background: var(--primary-color);
+    color: var(--text-color);
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+  <h2 class="page-heading" data-aos="fade-down">Contact Us</h2>
+  <div class="contact-form" data-aos="fade-up">
+    <form action="#" method="post" novalidate>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your Name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="How can we help you?" required></textarea>
+      </div>
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+  </div>
+</div>
+
+<div class="hq-container">
+  <h2 class="page-heading" data-aos="fade-down">Our Headquarters</h2>
+  <!-- Map Container -->
+  <div id="hq-map" data-aos="fade-up"></div>
+  <div class="hq-details" data-aos="fade-up" data-aos-delay="100">
+    <p>
+      SIQ Company is proudly headquartered near Wolnzach, Bavaria, Germany – the innovative hub where our advanced AI-powered platform is developed to search, identify, and qualify companies worldwide.
+    </p>
+    <h3>Our Shareholders</h3>
+    <ul class="shareholders">
+      <li>Michael Gscheider</li>
+      <li>Jakob Ruchnewitz</li>
+      <li>Benedikt Holzner</li>
+    </ul>
+    <p>
+      Our dedicated shareholders drive our mission by investing in cutting-edge technology and innovation. Their support empowers us to deliver exceptional lead generation and customer integration solutions.
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Initialize AOS animations
+  AOS.init({
+    duration: 800,
+    easing: 'slide'
+  });
+</script>
+
+<!-- Leaflet CSS and JS (make sure these are included in your base.html or here) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" defer></script>
+
+<script>
+  // Initialize the Leaflet map for the headquarters after the page loads
+  document.addEventListener("DOMContentLoaded", function() {
+    // Coordinates for Wolnzach, Bavaria, Germany
+    var hqLocation = [48.2333, 12.1667];
+    var map = L.map('hq-map').setView(hqLocation, 13);
+
+    // Add the OpenStreetMap tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Add a marker for the headquarters with a popup
+    L.marker(hqLocation).addTo(map)
+      .bindPopup('<strong>SIQ Company Headquarters</strong><br>Wolnzach, Bavaria, Germany')
+      .openPopup();
+  });
+</script>
+{% endblock %}
