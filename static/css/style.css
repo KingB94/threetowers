@@ -107,6 +107,8 @@
           right: 20px;
           padding: 10px;
           border-radius: 4px;
+          /* Optional: make the menu full width */
+          width: calc(100% - 40px);
         }
         nav ul.active {
           display: flex;
@@ -114,7 +116,20 @@
         .mobile-menu {
           display: flex;
         }
+        
+        /* Override the default desktop list-item margin for mobile */
+        nav ul li {
+          margin: 10px 0;
+        }
+        
+        /* Ensure links (including the login and signup buttons) fill the available width */
+        nav ul li a {
+          padding: 10px;
+          display: block;
+          text-align: center;
+        }
       }
+      
 
       /* Hero Section */
       .hero {
