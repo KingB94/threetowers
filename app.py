@@ -112,7 +112,7 @@ def create_checkout_session():
             ],
             mode="payment",
             success_url="https://yourwebsite.com/success",
-            cancel_url="https://yourwebsite.com/cancel",
+            cancel_url="https://threetowers.onrender.com/",
         )
         return jsonify({"sessionId": checkout_session.id})
     except Exception as e:
