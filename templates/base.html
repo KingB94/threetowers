@@ -12,7 +12,7 @@
     <meta name="keywords"
         content="{% block meta_keywords %}Search, Identify, Qualify, AI, Lead Generation, Global Leads, SIQ Company{% endblock %}" />
     <!-- Favicon -->
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
 
     <!-- Google Fonts (Montserrat, Orbitron & Roboto) -->
     <link
@@ -35,7 +35,11 @@
     <!-- Header -->
     <header>
         <div class="container">
-            <h1>SIQ Company</h1>
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='logo-png.png') }}" alt="SIQ Company Logo"
+                    class="company-logo" />
+                <h1>SIQ Company</h1>
+            </div>
             <nav>
                 <ul class="nav-links" id="nav-links">
                     <li><a href="{{ url_for('index') }}">Home</a></li>
@@ -58,6 +62,7 @@
             </nav>
         </div>
     </header>
+
 
     <!-- Main Content -->
     <main>
